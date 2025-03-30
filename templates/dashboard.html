@@ -1,0 +1,105 @@
+{% extends 'base/base.html' %}
+
+{% block title %} Dashboard-NewsAPP {% endblock %}
+
+{% block content %}
+
+<div class="admin-header">
+    <h1>Hi {{user.username}}<br>
+        Welcome to your Dashboard!
+    </h1>
+    
+    <button class="primary-button" onclick="document.getElementById('addArticleModal').style.display='block'">
+        Add New Article
+    </button>
+</div>
+
+<div class="admin-grid">
+    <div class="admin-sidebar">
+        <h3>Quick Stats</h3>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h4>Total Articles</h4>
+                <p>24</p>
+            </div>
+            <div class="stat-card">
+                <h4>Categories</h4>
+                <p>6</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="admin-content">
+        <div class="admin-table-container">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th>Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>The Future of AI</td>
+                        <td>Technology</td>
+                        <td>Mar 14, 2024</td>
+                        <td class="action-buttons">
+                            <button class="edit-button">Edit</button>
+                            <button class="delete-button">Delete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Championship Finals</td>
+                        <td>Sports</td>
+                        <td>Mar 13, 2024</td>
+                        <td class="action-buttons">
+                            <button class="edit-button">Edit</button>
+                            <button class="delete-button">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Add Article Modal -->
+<div id="addArticleModal" class="modal">
+ <div class="modal-content">
+    <span class="close" onclick="document.getElementById('addArticleModal').style.display='none'">&times;</span>
+    <h2>Add New Article</h2>
+    <form class="article-form">
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" id="title" name="title" required>
+        </div>
+        <div class="form-group">
+            <label for="category">Category</label>
+            <select id="category" name="category" required>
+                <option value="">Select Category</option>
+                <option value="technology">Technology</option>
+                <option value="sports">Sports</option>
+                <option value="business">Business</option>
+                <option value="politics">Politics</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="image">Featured Image</label>
+            <input type="file" id="image" name="image" accept="image/*" required>
+        </div>
+        <div class="form-group">
+            <label for="content">Content</label>
+            <textarea id="content" name="content" rows="6" required></textarea>
+        </div>
+        <div class="form-actions">
+            <button type="button" class="secondary-button" onclick="document.getElementById('addArticleModal').style.display='none'">Cancel</button>
+            <button type="submit" class="primary-button">Publish Article</button>
+        </div>
+    </form>
+ </div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'base/base.html'%}
+
+{% block title%} Home-NewsAPP {% endblock %}
+
+
+{% block content %}
+<main class="container">
+<section class="featured-news">
+    <h2>Latest Featured Stories</h2>
+    <div class="news-grid">
+        {% for post in posts %}
+        <article class="news-card">
+            <img src="{{ post.image.url }}" alt="News Image">
+            <div class="news-content">
+                <h3>{{ post.title }}</h3>
+                <p>{{ post.content|truncatewords:20 }}.</p>
+                
+                <a href="" class="read-more">Read More</a>
+                <p>{{ post.created_at }}</p>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+</section>
+</main>
+
+{% endblock %}

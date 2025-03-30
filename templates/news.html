@@ -1,0 +1,53 @@
+{% extends 'base/base.html' %}
+
+{% block title %} Articles-NewsAPP {% endblock %}
+
+{% block content %}
+
+
+<section class="articles-list">
+    <div class="articles-header">
+        <h1>Latest Articles</h1>
+        <div class="categories-filter">
+            <button class="category-pill active">All</button>
+            <button class="category-pill">Technology</button>
+            <button class="category-pill">Sports</button>
+            <button class="category-pill">Business</button>
+            <button class="category-pill">Politics</button>
+        </div>
+    </div>
+
+    <div class="articles-grid">
+        {% for post in pages %}
+        <article class="article-card">
+            <img src="{{ post.image.url }}" alt="Article Image">
+            <div class="article-content">
+                <span class="category">{{ post.category }}</span>
+                <h2>{{ post.title }}</h2>
+                <p>{{ post.content|truncatewords:20 }}</p>
+                <a href="" class="read-more">Read More</a>
+                <p>{{ post.created_at }}</p>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+
+    <div class="pagination">
+        {% if pages.has_previous %}
+        <a href="?page={{ pages.previous_page_number }}">
+        <button class="pagination-button">&laquo; Previous</button>
+        </a>
+        {% endif %}
+        <div class="pagination-numbers">
+            <button class="pagination-number active">{{pages.number}}</button>
+        </div>
+        {% if pages.has_next %}
+        <a href="?page={{ pages.next_page_number }}">
+        <button class="pagination-button">Next &raquo;</button>
+        </a>
+        {% endif %}
+    </div>
+</section>
+
+
+{% endblock %}
