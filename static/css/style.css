@@ -269,41 +269,36 @@ body {
     color: #d32f2f;
 }
 
-/* Modal */
-.modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.5);
-    z-index: 1100;
-}
-
-.modal-content {
+/* Add Article Form */
+.add-article-form-container {
     background: #fff;
-    margin: 2rem auto;
     padding: 2rem;
-    max-width: 600px;
     border-radius: 8px;
-    position: relative;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    max-width: 800px;
+    margin: 0 auto;
 }
 
-.close {
-    position: absolute;
-    right: 1rem;
-    top: 1rem;
-    font-size: 1.5rem;
-    cursor: pointer;
+.add-article-form {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.file-upload {
+    border: 2px dashed #ddd;
+    padding: 1.5rem;
+    border-radius: 4px;
+    text-align: center;
+    background: #f8f8f8;
+}
+
+.file-hint {
+    font-size: 0.875rem;
     color: #666;
+    margin-top: 0.5rem;
 }
 
 /* Form Styles */
-.article-form {
-    margin-top: 1.5rem;
-}
-
 .form-group {
     margin-bottom: 1.5rem;
 }
@@ -318,10 +313,38 @@ body {
 .form-group select,
 .form-group textarea {
     width: 100%;
-    padding: 0.5rem;
+    padding: 0.75rem;
     border: 1px solid #ddd;
     border-radius: 4px;
     font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #1a1a1a;
+    outline: none;
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.form-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.form-checkbox input[type="checkbox"] {
+    width: auto;
+}
+
+.form-checkbox label {
+    margin: 0;
+    font-size: 0.875rem;
 }
 
 .form-actions {
@@ -334,12 +357,13 @@ body {
 /* Buttons */
 .primary-button,
 .secondary-button {
-    padding: 0.5rem 1rem;
+    padding: 0.75rem 1.5rem;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     font-size: 0.875rem;
     font-weight: 500;
+    transition: all 0.3s ease;
 }
 
 .primary-button {
@@ -347,9 +371,17 @@ body {
     color: #fff;
 }
 
+.primary-button:hover {
+    background: #333;
+}
+
 .secondary-button {
     background: #f0f0f0;
     color: #666;
+}
+
+.secondary-button:hover {
+    background: #e0e0e0;
 }
 
 /* Categories Filter */
@@ -463,32 +495,6 @@ body {
     margin-bottom: 1.5rem;
 }
 
-.form-checkbox {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.form-checkbox input[type="checkbox"] {
-    width: auto;
-}
-
-.form-checkbox label {
-    margin: 0;
-    font-size: 0.875rem;
-}
-
-.forgot-password {
-    margin-left: auto;
-    font-size: 0.875rem;
-    color: #1976d2;
-    text-decoration: none;
-}
-
-.forgot-password:hover {
-    text-decoration: underline;
-}
-
 .auth-button {
     width: 100%;
     padding: 0.75rem;
@@ -562,5 +568,17 @@ body {
 
     .auth-card {
         margin: 1rem;
+    }
+
+    .add-article-form-container {
+        padding: 1rem;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .form-actions button {
+        width: 100%;
     }
 }

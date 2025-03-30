@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from .models import Category,Post
 from django.core.paginator import Paginator
+from .forms import PostForm
 
 
 # Create your views here.
@@ -67,4 +68,23 @@ def article(request):
 
 def add_article(request):
 
-    return render(request,'add_article.html')
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES)
+
+        
+
+        if form.is_valid():
+            
+            post = form.save(commit=False)
+            post.author = request.user
+            post.save()
+
+            return redirect('/')
+    
+    else:
+        form = PostForm()
+    
+    context ={
+        'form':form
+    }
+    return render(request,'add_article.html',context=context)
