@@ -49,8 +49,8 @@
                         <td>{{ post.category }}</td>
                         <td>{{ post.created_at }}</td>
                         <td class="action-buttons">
-                            <button class="edit-button">Edit</button>
-                            <button class="delete-button">Delete</button>
+                            <a href="{% url 'update_article' post.slug %}"><button class="edit-button">Edit</button></a>
+                           <a href="{% url 'delete_article' post.slug %}"><button class="delete-button">Delete</button></a>
                         </td>
                     </tr>
                     {% endfor %}
@@ -74,8 +74,6 @@
         </div>
     </div>
 </div>
-
-
 
 <!-- Add Article Modal 
 <div id="addArticleModal" class="modal">

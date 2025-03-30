@@ -62,9 +62,15 @@ def dashboard(request):
 
 
 
-def article(request):
+def article(request,post_slug):
 
-    return render(request,'article.html')
+    posts = get_object_or_404(Post, slug = post_slug)
+
+    context = {
+        'posts':posts
+    }
+
+    return render(request,'article.html',context=context)
 
 def add_article(request):
 
@@ -88,3 +94,36 @@ def add_article(request):
         'form':form
     }
     return render(request,'add_article.html',context=context)
+
+def update_article(request, post_slug):
+
+    post = get_object_or_404(Post, slug = post_slug)
+
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES, instance=post)
+
+        if form.is_valid():
+
+          form.save()
+
+          return redirect('dashboard')
+    
+    else:
+        form = PostForm(instance=post)
+    
+    context = {
+        'form':form,
+        'post':post
+    }
+    
+    return render(request, 'update_article.html', context=context)
+
+def delete_article(request, post_slug):
+
+    post = get_object_or_404(Post, slug = post_slug)
+
+    post.delete()
+    return redirect('dashboard')
+
+
+

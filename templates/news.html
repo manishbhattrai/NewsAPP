@@ -29,7 +29,7 @@
                 <span class="category">{{ post.category }}</span>
                 <h2>{{ post.title }}</h2>
                 <p>{{ post.content|truncatewords:20 }}</p>
-                <a href="" class="read-more">Read More</a>
+                <a href="{% url 'article' post.slug %}" class="read-more">Read More</a>
                 <p>{{ post.created_at }}</p>
             </div>
         </article>
