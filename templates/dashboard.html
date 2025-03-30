@@ -9,9 +9,11 @@
         Welcome to your Dashboard!
     </h1>
     
-    <button class="primary-button" onclick="document.getElementById('addArticleModal').style.display='block'">
+    <a href="{% url 'add_article' %}">
+    <button class="primary-button">
         Add New Article
     </button>
+    </a>
 </div>
 
 <div class="admin-grid">
@@ -19,12 +21,12 @@
         <h3>Quick Stats</h3>
         <div class="stats-grid">
             <div class="stat-card">
-                <h4>Total Articles</h4>
-                <p>24</p>
+                <h4>Your Total Articles</h4>
+                <p>{{ post_count }}</p>
             </div>
             <div class="stat-card">
                 <h4>Categories</h4>
-                <p>6</p>
+                <p>{{ category_count }}</p>
             </div>
         </div>
     </div>
@@ -41,26 +43,34 @@
                     </tr>
                 </thead>
                 <tbody>
+                    {% for post in posts %}
                     <tr>
-                        <td>The Future of AI</td>
-                        <td>Technology</td>
-                        <td>Mar 14, 2024</td>
+                        <td>{{ post.title }}</td>
+                        <td>{{ post.category }}</td>
+                        <td>{{ post.created_at }}</td>
                         <td class="action-buttons">
                             <button class="edit-button">Edit</button>
                             <button class="delete-button">Delete</button>
                         </td>
                     </tr>
-                    <tr>
-                        <td>Championship Finals</td>
-                        <td>Sports</td>
-                        <td>Mar 13, 2024</td>
-                        <td class="action-buttons">
-                            <button class="edit-button">Edit</button>
-                            <button class="delete-button">Delete</button>
-                        </td>
-                    </tr>
+                    {% endfor %}
                 </tbody>
             </table>
+        </div>
+        <div class="pagination">
+            {% if posts.has_previous %}
+            <a href="?page={{ posts.previous_page_number }}">
+            <button class="pagination-button">&laquo; Previous</button>
+            </a>
+            {% endif %}
+            <div class="pagination-numbers">
+                <button class="pagination-number active">{{posts.number}}</button>
+            </div>
+            {% if posts.has_next %}
+            <a href="?page={{ posts.next_page_number }}">
+            <button class="pagination-button">Next &raquo;</button>
+            </a>
+            {% endif %}
         </div>
     </div>
 </div>

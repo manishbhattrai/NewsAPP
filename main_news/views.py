@@ -42,10 +42,29 @@ def main_page(request, category_slug=None):
 
 def dashboard(request):
 
-    return render(request, 'dashboard.html')
+    user = request.user
+    posts = Post.objects.filter(author=user).order_by('-created_at')
+    post_count = posts.count()
+    category_count = posts.values('category').distinct().count()
+
+    paginator = Paginator(posts, 4)
+    page_num = request.GET.get('page')
+    page_obj = paginator.get_page(page_num)
+
+    context = {
+        'posts':page_obj,
+        'post_count':post_count,
+        'category_count': category_count,
+    }
+
+    return render(request, 'dashboard.html',context=context)
 
 
 
 def article(request):
 
     return render(request,'article.html')
+
+def add_article(request):
+
+    return render(request,'add_article.html')
