@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from .models import Category,Post
 from django.core.paginator import Paginator
 
@@ -16,9 +16,17 @@ def home(request):
 
     return render(request, 'home.html',context=context)
 
-def main_page(request):
+def main_page(request, category_slug=None):
+    
+    categories = None
+    posts = None
 
-    posts = Post.objects.all()
+    if category_slug != None:
+        categories = get_object_or_404(Category, slug = category_slug)
+        posts = Post.objects.filter(category=categories).order_by('-created_at')
+    
+    else:
+        posts = Post.objects.order_by('-created_at').all()
 
     paginator = Paginator(posts,6)
     page_number = request.GET.get('page')

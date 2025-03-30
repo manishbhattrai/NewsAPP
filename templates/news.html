@@ -8,12 +8,16 @@
 <section class="articles-list">
     <div class="articles-header">
         <h1>Latest Articles</h1>
+        
         <div class="categories-filter">
-            <button class="category-pill active">All</button>
-            <button class="category-pill">Technology</button>
-            <button class="category-pill">Sports</button>
-            <button class="category-pill">Business</button>
-            <button class="category-pill">Politics</button>
+            <a href="{% url 'news' %}">
+                <button class="category-pill">All</button>
+                </a>
+            {% for category in links %}
+            <a href="{{ category.get_url }}">
+            <button class="category-pill">{{ category.name }}</button>
+            </a>
+            {% endfor %}
         </div>
     </div>
 
