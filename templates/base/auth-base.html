@@ -15,7 +15,7 @@
         <div class="nav-brand">NewsApp</div>
         <ul class="nav-links">
             <li><a href="{% url 'home' %}">Home</a></li>
-            <li><a href="">Articles</a></li>
+            <li><a href="{% url 'news' %}">Articles</a></li>
 
             {% if user.is_authenticated %}
 
