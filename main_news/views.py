@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect,get_object_or_404
-from .models import Category,Post,Like
+from .models import Category,Post,Like,Comment
 from django.core.paginator import Paginator
-from .forms import PostForm
+from .forms import PostForm,CommentForm
 from django.contrib.auth.decorators import login_required
 
 
@@ -11,6 +11,9 @@ from django.contrib.auth.decorators import login_required
 def home(request):
 
     posts = Post.objects.order_by('-created_at').all() [:6]
+
+    for post in posts:
+        post.total_comments = post.comments.count()
 
     context = {
         'posts':posts
@@ -29,6 +32,9 @@ def main_page(request, category_slug=None):
     
     else:
         posts = Post.objects.order_by('-created_at').all()
+    
+    for post in posts:
+        post.total_comments = post.comments.count()
 
     paginator = Paginator(posts,6)
     page_number = request.GET.get('page')
@@ -65,10 +71,30 @@ def dashboard(request):
 @login_required(login_url='login')
 def article(request,post_slug):
 
+    user = request.user
+
     posts = get_object_or_404(Post, slug = post_slug)
 
+    comments = posts.comments.all()
+
+    total_comments = comments.count()
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            content = form.cleaned_data['content']
+            comment = Comment(post=posts, user=user, content=content)
+            comment.save()
+            return redirect('article', post_slug=post_slug)
+    
+    else:
+        form = CommentForm()
+
     context = {
-        'posts':posts
+        'posts':posts,
+        'form':form,
+        'comments':comments,
+        'total_comments':total_comments,
     }
 
     return render(request,'article.html', context=context)

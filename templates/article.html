@@ -40,26 +40,32 @@
     </div>
    
     <div class="comments-section">
-        <h3>Comments (123)</h3>
+        <h3>Comments ({{ total_comments }})</h3>
         
-        <form class="comment-form">
-            <textarea placeholder="Write your comment..." rows="3"></textarea>
+        <form class="comment-form" method="post">
+            {% csrf_token %}
+            <textarea class="content" name="content" placeholder="Write your comment..." rows="3"></textarea>
             <button type="submit" class="primary-button">Post Comment</button>
         </form>
 
         <div class="comments-list">
             <div class="comment">
+                {% for comment in comments %}
                 <div class="comment-header">
-                    <strong>Jane Smith</strong>
-                    <span class="comment-date">2 hours ago</span>
+                    <strong>{{ comment.user.username}}</strong>
+                    <span class="comment-date">{{ comment.created_at }}</span>
                 </div>
-                <p>I would love to see more examples of practical AI applications in everyday scenarios.</p>
-                        <div class="comment-actions">
-                            <button class="comment-like">
-                                <i class="icon-heart"></i>
-                                <span>15</span>
-                            </button>
-                            <button class="comment-reply">Reply</button>
+                <p>{{ comment.content }}</p>
+                <!--<div class="comment-actions">
+                    <button class="comment-like">
+                        <i class="icon-heart"></i>
+                        <span>15</span>
+                    </button>
+                    <button class="comment-reply">Reply</button>
+                </div>-->
+                {% empty %}
+                <p>No comments yet.</p>
+                {% endfor %}
             </div>
         </div>
     </div>
