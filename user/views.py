@@ -27,16 +27,17 @@ def user_create(request):
 
         if password1 != password2:
             messages.error(request,"Password didn't match")
-            return redirect('/signup')
+            return redirect('/user/signup/')
         
         
         try:
             User.objects.create_user(username=username,email=email, password=password1)
             messages.success(request,"Account Created Successfully!")
-            return redirect('/login')
+            return redirect('/user/login/')
+        
         except Exception as e:
             messages.error(request, f"error:{e}")
-            return redirect('/signup')
+            return redirect('/user/signup/')
       
     
     return render(request,'signup.html')
