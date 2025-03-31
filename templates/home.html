@@ -17,6 +17,12 @@
                 
                 <a href="{% url 'article' post.slug %}" class="read-more">Read More</a>
                 <p>{{ post.created_at }}</p>
+
+                <div class="article-social">
+                    <div class="social-stat">
+                        <i class="icon-heart"></i>
+                        <span>{{ post.likes_count }} likes</span>
+                    </div>
             </div>
         </article>
         {% endfor %}

@@ -527,6 +527,148 @@ body {
     margin-top: 4rem;
 }
 
+/* Social Stats */
+.article-social {
+    display: flex;
+    gap: 1rem;
+    margin: 1rem 0;
+    color: #666;
+    font-size: 0.875rem;
+}
+
+.social-stat {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+/* Icons */
+.icon-heart::before {
+    content: "♥";
+    color: #ff4081;
+}
+
+.icon-comment::before {
+    content: "💬";
+}
+
+/* Like Button */
+.like-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #ff4081;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.like-button:hover {
+    background-color: #fff5f8;
+    transform: translateY(-2px);
+}
+
+.like-button.active {
+    background-color: #ff4081;
+    color: #fff;
+}
+
+/* Comments Section */
+.comments-section {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid #eee;
+}
+
+.comments-section h3 {
+    margin-bottom: 1.5rem;
+    color: #333;
+}
+
+.comment-form {
+    margin-bottom: 2rem;
+}
+
+.comment-form textarea {
+    width: 100%;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    resize: vertical;
+    margin-bottom: 1rem;
+    font-family: inherit;
+    transition: border-color 0.3s ease;
+}
+
+.comment-form textarea:focus {
+    border-color: #1a1a1a;
+    outline: none;
+}
+
+.comments-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.comment {
+    background-color: #f8f8f8;
+    padding: 1.5rem;
+    border-radius: 8px;
+}
+
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.comment-date {
+    color: #666;
+    font-size: 0.875rem;
+}
+
+.comment p {
+    color: #333;
+    line-height: 1.6;
+}
+
+.comment-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.comment-like,
+.comment-reply {
+    background: none;
+    border: none;
+    color: #666;
+    font-size: 0.875rem;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.comment-like:hover,
+.comment-reply:hover {
+    color: #1a1a1a;
+}
+
+.article-social-actions {
+    margin: 2rem 0;
+    display: flex;
+    gap: 1rem;
+}
+
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .navbar {
@@ -580,5 +722,17 @@ body {
 
     .form-actions button {
         width: 100%;
+    }
+    .comment {
+        padding: 1rem;
+    }
+
+    .comment-actions {
+        flex-wrap: wrap;
+    }
+
+    .like-button {
+        width: 100%;
+        justify-content: center;
     }
 }

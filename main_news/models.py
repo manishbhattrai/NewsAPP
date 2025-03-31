@@ -50,6 +50,8 @@ class Post(models.Model):
     slug = models.SlugField(unique=True, null=True, blank=True)
     image = models.ImageField(upload_to='news/')
     content = models.TextField()
+    likes_count = models.IntegerField(default=0)
+    likes = models.ManyToManyField(User, through='Like', related_name='liked_posts')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -69,9 +71,27 @@ class Post(models.Model):
                 count += 1
         
         super().save(*args, **kwargs)
+    
+    def update_likes_count(self):
+        self.likes_count = self.likes.count() 
+
+        self.save()
 
 
 
     def __str__(self):
         return f"{self.author.username}'s Post."
+
+class Like(models.Model):
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    article = models.ForeignKey(Post, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+
+    class Meta:
+
+        unique_together = ('user', 'article')
     
+    def __str__(self):
+        return f"{self.user.username} liked {self.article.title}"  

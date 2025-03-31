@@ -12,5 +12,7 @@ urlpatterns = [
     path('add-article/', views.add_article, name='add_article'),
     path('update-article/<slug:post_slug>/', views.update_article, name='update_article'),
     path('delete-article/<slug:post_slug>/', views.delete_article, name='delete_article'),
+    path('article/<slug:post_slug>/like/', views.article_likes, name='article_likes'),
+
 
 ]

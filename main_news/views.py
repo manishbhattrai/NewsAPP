@@ -1,7 +1,8 @@
 from django.shortcuts import render,redirect,get_object_or_404
-from .models import Category,Post
+from .models import Category,Post,Like
 from django.core.paginator import Paginator
 from .forms import PostForm
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
@@ -40,7 +41,7 @@ def main_page(request, category_slug=None):
     return render(request,'news.html', context=context)
 
 
-
+@login_required(login_url='login')
 def dashboard(request):
 
     user = request.user
@@ -61,7 +62,7 @@ def dashboard(request):
     return render(request, 'dashboard.html',context=context)
 
 
-
+@login_required(login_url='login')
 def article(request,post_slug):
 
     posts = get_object_or_404(Post, slug = post_slug)
@@ -70,8 +71,9 @@ def article(request,post_slug):
         'posts':posts
     }
 
-    return render(request,'article.html',context=context)
+    return render(request,'article.html', context=context)
 
+@login_required(login_url='login')
 def add_article(request):
 
     if request.method == 'POST':
@@ -95,6 +97,7 @@ def add_article(request):
     }
     return render(request,'add_article.html',context=context)
 
+@login_required(login_url='login')
 def update_article(request, post_slug):
 
     post = get_object_or_404(Post, slug = post_slug)
@@ -118,12 +121,36 @@ def update_article(request, post_slug):
     
     return render(request, 'update_article.html', context=context)
 
+@login_required(login_url='login')
 def delete_article(request, post_slug):
 
     post = get_object_or_404(Post, slug = post_slug)
 
     post.delete()
     return redirect('dashboard')
+
+
+@login_required(login_url='login')
+def article_likes(request,post_slug):
+
+    user = request.user
+
+    posts = get_object_or_404(Post, slug = post_slug)
+
+    existing_like = Like.objects.filter(user=user, article=posts).first()
+
+    if existing_like:
+
+        existing_like.delete()
+    
+    else:
+        Like.objects.create(user=user, article=posts)
+
+    
+    posts.update_likes_count()
+
+
+    return redirect('article',post_slug=post_slug)
 
 
 
